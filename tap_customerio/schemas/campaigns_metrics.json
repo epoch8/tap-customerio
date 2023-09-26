@@ -1,0 +1,101 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "campaign_id": {
+        "type": "number"
+      },
+      "metric": {
+        "type": "object",
+        "properties": {
+          "series": {
+            "type": "object",
+            "properties": {
+              "2xx": {
+                "type": "array",
+                "items": { "type": "integer" }
+              },
+              "3xx": {
+                "type": "array",
+                "items": { "type": "integer" }
+              },
+              "4xx": {
+                "type": "array",
+                "items": { "type": "integer" }
+              },
+              "5xx": {
+                "type": "array",
+                "items": { "type": "integer" }
+              },
+              "attempted": {
+                "type": "array",
+                "items": { "type": "integer" }
+              },
+              "bounced": {
+                "type": "array",
+                "items": { "type": "integer" }
+              },
+              "clicked": {
+                "type": "array",
+                "items": { "type": "integer" }
+              },
+              "converted": {
+                "type": "array",
+                "items": { "type": "integer" }
+              },
+              "created": {
+                "type": "array",
+                "items": { "type": "integer" }
+              },
+              "deferred": {
+                "type": "array",
+                "items": { "type": "integer" }
+              },
+              "delivered": {
+                "type": "array",
+                "items": { "type": "integer" }
+              },
+              "drafted": {
+                "type": "array",
+                "items": { "type": "integer" }
+              },
+              "failed": {
+                "type": "array",
+                "items": { "type": "integer" }
+              },
+              "opened": {
+                "type": "array",
+                "items": { "type": "integer" }
+              },
+              "sent": {
+                "type": "array",
+                "items": { "type": "integer" }
+              },
+              "spammed": {
+                "type": "array",
+                "items": { "type": "integer" }
+              },
+              "suppressed": {
+                "type": "array",
+                "items": { "type": "integer" }
+              },
+              "undeliverable": {
+                "type": "array",
+                "items": { "type": "integer" }
+              },
+              "topic_unsubscribed": {
+                "type": "array",
+                "items": { "type": "integer" }
+              },
+              "unsubscribed": {
+                "type": "array",
+                "items": { "type": "integer" }
+              }
+            }
+          }
+        },
+        "required": ["series"]
+      }
+    },
+    "required": ["metric"]
+  }

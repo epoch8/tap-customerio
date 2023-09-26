@@ -1,0 +1,159 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+    "newsletter_id": {
+        "type": "number"
+        },
+      "metric": {
+        "type": "object",
+        "properties": {
+          "series": {
+            "type": "object",
+            "properties": {
+              "2xx": {
+                "type": ["array", "null"],
+                "items": {
+                  "type": "integer",
+                  "nullable": true
+                }
+              },
+              "3xx": {
+                "type": ["array", "null"],
+                "items": {
+                  "type": "integer",
+                  "nullable": true
+                }
+              },
+              "4xx": {
+                "type": ["array", "null"],
+                "items": {
+                  "type": "integer",
+                  "nullable": true
+                }
+              },
+              "5xx": {
+                "type": ["array", "null"],
+                "items": {
+                  "type": "integer",
+                  "nullable": true
+                }
+              },
+              "attempted": {
+                "type": ["array", "null"],
+                "items": {
+                  "type": "integer",
+                  "nullable": true
+                }
+              },
+              "bounced": {
+                "type": ["array", "null"],
+                "items": {
+                  "type": "integer",
+                  "nullable": true
+                }
+              },
+              "clicked": {
+                "type": ["array", "null"],
+                "items": {
+                  "type": "integer",
+                  "nullable": true
+                }
+              },
+              "converted": {
+                "type": ["array", "null"],
+                "items": {
+                  "type": "integer",
+                  "nullable": true
+                }
+              },
+              "created": {
+                "type": ["array", "null"],
+                "items": {
+                  "type": "integer",
+                  "nullable": true
+                }
+              },
+              "deferred": {
+                "type": ["array", "null"],
+                "items": {
+                  "type": "integer",
+                  "nullable": true
+                }
+              },
+              "delivered": {
+                "type": ["array", "null"],
+                "items": {
+                  "type": "integer",
+                  "nullable": true
+                }
+              },
+              "drafted": {
+                "type": ["array", "null"],
+                "items": {
+                  "type": "integer",
+                  "nullable": true
+                }
+              },
+              "failed": {
+                "type": ["array", "null"],
+                "items": {
+                  "type": "integer",
+                  "nullable": true
+                }
+              },
+              "opened": {
+                "type": ["array", "null"],
+                "items": {
+                  "type": "integer",
+                  "nullable": true
+                }
+              },
+              "sent": {
+                "type": ["array", "null"],
+                "items": {
+                  "type": "integer",
+                  "nullable": true
+                }
+              },
+              "spammed": {
+                "type": ["array", "null"],
+                "items": {
+                  "type": "integer",
+                  "nullable": true
+                }
+              },
+              "suppressed": {
+                "type": ["array", "null"],
+                "items": {
+                  "type": "integer",
+                  "nullable": true
+                }
+              },
+              "undeliverable": {
+                "type": ["array", "null"],
+                "items": {
+                  "type": "integer",
+                  "nullable": true
+                }
+              },
+              "topic_unsubscribed": {
+                "type": ["array", "null"],
+                "items": {
+                  "type": "integer",
+                  "nullable": true
+                }
+              },
+              "unsubscribed": {
+                "type": ["array", "null"],
+                "items": {
+                  "type": "integer",
+                  "nullable": true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }

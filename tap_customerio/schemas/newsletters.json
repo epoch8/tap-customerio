@@ -1,0 +1,51 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "id": {
+          "type": ["number", "null"]
+        },
+        "deduplicate_id": {
+          "type": ["string", "null"]
+        },
+        "msg_template_ids": {
+          "type": ["array", "null"],
+          "items": {
+            "type": ["number", "null"]
+          }
+        },
+        "content_ids": {
+          "type": ["array", "null"],
+          "items": {
+            "type": ["number", "null"]
+          }
+        },
+        "recipient_filter_ids": {
+          "type": ["array", "null"],
+          "items": {
+            "type": ["number", "null"]
+          }
+        },
+        "name": {
+          "type": ["string", "null"]
+        },
+        "subject": {
+          "type": ["string", "null"]
+        },
+        "sent_at": {
+          "type": ["null", "number"]
+        },
+        "created": {
+          "type": ["number", "null"]
+        },
+        "updated": {
+          "type": ["number", "null"]
+        },
+        "tags": {
+          "type": ["array", "null"],
+          "items": {
+            "type": ["string", "null"]
+          }
+        }
+      }
+}
