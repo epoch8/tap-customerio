@@ -3,31 +3,31 @@
     "type": "object",
     "properties": {
         "id": {
-          "type": ["number", "null"]
+          "type": "integer"
         },
         "deduplicate_id": {
-          "type": ["string", "null"]
+          "type": "string"
         },
         "msg_template_ids": {
-          "type": ["array", "null"],
+          "type": "array",
           "items": {
-            "type": ["number", "null"]
+            "type": "integer"
           }
         },
         "content_ids": {
-          "type": ["array", "null"],
+          "type": "array",
           "items": {
-            "type": ["number", "null"]
+            "type": "integer"
           }
         },
         "recipient_filter_ids": {
-          "type": ["array", "null"],
+          "type": "array",
           "items": {
-            "type": ["number", "null"]
+            "type": "integer"
           }
         },
         "name": {
-          "type": ["string", "null"]
+          "type": "string"
         },
         "subject": {
           "type": ["string", "null"]
@@ -36,10 +36,10 @@
           "type": ["null", "number"]
         },
         "created": {
-          "type": ["number", "null"]
+          "type": "integer"
         },
         "updated": {
-          "type": ["number", "null"]
+          "type": "integer"
         },
         "tags": {
           "type": ["array", "null"],
