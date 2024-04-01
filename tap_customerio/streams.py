@@ -44,6 +44,122 @@ class CampaignsMetricsStream(CustomerIoStream):
         row['campaign_id'] = context['campaign_id']
         return row
 
+class CampaignsActionsStream(CustomerIoStream):
+    name = "campaigns_actions"
+    parent_stream_type = CampaignsStream
+    path = "/campaigns/{campaign_id}/actions"
+    primary_keys = []
+    replication_key = None
+    schema_filepath = None
+    schema = th.PropertiesList(
+            th.Property("id", th.StringType),
+            th.Property("campaign_id", th.IntegerType),
+            th.Property("parent_action_id", th.IntegerType),
+            th.Property("deduplicate_id", th.StringType),
+            th.Property("name", th.StringType),
+            th.Property("layout", th.StringType),
+            th.Property("created", th.IntegerType),
+            th.Property("updated", th.IntegerType),
+            th.Property("body_amp", th.StringType),
+            th.Property("language", th.StringType),
+            th.Property("type", th.StringType),
+            th.Property("sending_state", th.StringType),
+            th.Property("from_email", th.StringType),
+            th.Property("from_id", th.IntegerType),
+            th.Property("reply_to", th.StringType),
+            th.Property("reply_to_id", th.IntegerType),
+            th.Property("preprocessor", th.StringType),
+            th.Property("recipient", th.StringType),
+            th.Property("subject", th.StringType),
+            th.Property("bcc", th.StringType),
+            th.Property("fake_bcc", th.BooleanType),
+            th.Property("preheader_text", th.StringType),
+    ).to_dict()
+
+    def post_process(self, row: dict, context: dict) -> dict | None:
+        row['campaign_id'] = context['campaign_id']
+        return row
+    
+    def parse_response(self, response: requests.Response) -> Iterable[dict]:
+        data = response.json()
+        actions = data.get("actions")
+
+        if actions:
+            for action in actions:
+                result = {
+                    "id": action.get("id"),
+                    "campaign_id": action.get("campaign_id"),
+                    "parent_action_id": action.get("parent_action_id"),
+                    "deduplicate_id": action.get("deduplicate_id"),
+                    "name": action.get("name"),
+                    "layout": action.get("layout"),
+                    "created": action.get("created"),
+                    "updated": action.get("updated"),
+                    "body_amp": action.get("body_amp"),
+                    "language": action.get("language"),
+                    "type": action.get("type"),
+                    "sending_state": action.get("sending_state"),
+                    "from_email": action.get("from"),
+                    "from_id": action.get("from_id"),
+                    "reply_to": action.get("reply_to"),
+                    "reply_to_id": action.get("reply_to_id"),
+                    "preprocessor": action.get("preprocessor"),
+                    "recipient": action.get("recipient"),
+                    "subject": action.get("subject", ""),
+                    "bcc": action.get("bcc"),
+                    "fake_bcc": action.get("fake_bcc"),
+                    "preheader_text": action.get("preheader_text", ""),
+                }
+                for key, val in result.items():
+                    if isinstance(val, str):
+                        result[key] = val.encode("ascii", "ignore").decode('utf-8')
+                yield result
+
+
+class CampaignsMessagesStream(CustomerIoStream):
+    name = "campaigns_messages"
+    parent_stream_type = CampaignsStream
+    path = "/campaigns/{campaign_id}/messages"
+    primary_keys = []
+    replication_key = None
+    schema_filepath = None
+    schema = th.PropertiesList(
+            th.Property("id", th.StringType),
+            th.Property("deduplicate_id", th.StringType),
+            th.Property("msg_template_id", th.IntegerType),
+            th.Property("action_id", th.IntegerType),
+            th.Property("customer_id", th.StringType),
+            th.Property("customer_identifiers", th.ObjectType(
+                th.Property("id", th.StringType),
+                th.Property("email", th.StringType),
+                th.Property("cio_id", th.StringType),
+            )),
+            th.Property("recipient", th.StringType),
+            th.Property("subject", th.StringType),
+            th.Property("metrics", th.ObjectType(
+                th.Property("delivered", th.IntegerType),
+                th.Property("sent", th.IntegerType),
+            )),
+            th.Property("created", th.IntegerType),
+            th.Property("failure_message", th.StringType),
+            th.Property("newsletter_id", th.StringType),
+            th.Property("content_id", th.IntegerType),
+            th.Property("campaign_id", th.IntegerType),
+            th.Property("broadcast_id", th.StringType),
+            th.Property("type", th.StringType),
+            th.Property("forgotten", th.BooleanType),
+    ).to_dict()
+
+    def post_process(self, row: dict, context: dict) -> dict | None:
+        row['campaign_id'] = context['campaign_id']
+        return row
+    
+    def parse_response(self, response: requests.Response) -> Iterable[dict]:
+        data = response.json()
+        messages = data['messages']
+
+        for message in messages:
+            yield message
 
 
 class NewslettersStream(CustomerIoStream):
