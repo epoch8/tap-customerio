@@ -2,11 +2,14 @@
 
 from __future__ import annotations
 
+import time
 import typing as t
 from pathlib import Path
-from typing import Iterable
+from typing import Any, Dict, Iterable, Optional
 import requests
+import datetime
 
+from singer_sdk.pagination import BaseHATEOASPaginator
 from singer_sdk import typing as th  # JSON Schema typing helpers
 
 from tap_customerio.client import CustomerIoStream
@@ -15,7 +18,14 @@ from tap_customerio.client import CustomerIoStream
 SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
 # TODO: - Override `UsersStream` and `GroupsStream` with your own stream definition.
 #       - Copy-paste as many times as needed to create multiple stream types.
+import logging
 
+
+class MyPaginator(BaseHATEOASPaginator):
+    def get_next_url(self, response):
+        data = response.json()
+        return data.get("next")
+    
 
 class CampaignsStream(CustomerIoStream):
 
@@ -153,6 +163,29 @@ class CampaignsMessagesStream(CustomerIoStream):
     def post_process(self, row: dict, context: dict) -> dict | None:
         row['campaign_id'] = context['campaign_id']
         return row
+
+    def get_new_paginator(self):
+        return MyPaginator()
+
+    def get_url_params(
+        self, context: Optional[dict], next_page_token: Optional[Any]
+    ) -> Dict[str, Any]:
+        """Return a dictionary of values to be used in URL parameterization."""
+        today = datetime.date.today()
+        timedelta = datetime.timedelta(days=30)
+        start_ts = int(time.mktime(today.timetuple()))
+        end_ts = int(time.mktime((today - timedelta).timetuple()))
+        params = {
+            "limit": 1000,
+            "start_ts": start_ts,
+            "end_ts": end_ts,
+        }
+        if next_page_token:
+            params["start"] = next_page_token
+        if self.replication_key:
+            params["sort"] = "asc"
+            params["order_by"] = self.replication_key
+        return params
     
     def parse_response(self, response: requests.Response) -> Iterable[dict]:
         data = response.json()
